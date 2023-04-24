@@ -26,7 +26,42 @@ it("should say hello", function() {
 // This is called "Red-Green-Refactor"
 // ========================================================
 
+it("Should return the area of a rectangle", function () {
+  const area = utils.area(5, 10)
+  expect(area).to.be.a("number")
+  expect(area).to.equal(50)
+})
 
+it("Should return the perimeter of a rectangle", function () {
+  const perimeter = utils.perimeter(5, 10)
+  expect(perimeter).to.be.a("number")
+  expect(perimeter).to.equal(30)
+})
+
+it("Should return the area of a circle with radius", function () {
+  const circleArea = utils.circleArea(5)
+  expect(circleArea).to.be.a("number")
+  expect(circleArea).to.equal(Math.PI * 5 * 5)
+})
+
+it("Should return null if width is negative", function () {
+  const area = utils.area(-5, 10)
+  const perimeter = utils.perimeter(-5, 10)
+  expect(area).to.be.null
+  expect(perimeter).to.be.null
+})
+
+it("Should return null if breadth is negative", function () {
+  const area = utils.area(5, -10)
+  const perimeter = utils.perimeter(5, -10)
+  expect(area).to.be.null
+  expect(perimeter).to.be.null
+})
+
+it("Should return null if radius is negative", function () {
+  const circleArea = utils.circleArea(-5)
+  expect(circleArea).to.be.null
+})
 
 
 // ========================================================
