@@ -78,27 +78,73 @@ beforeEach((done) => {
 })
 
 it("Should create a new (object) Item with name and price", function() {
-  const item = utils.createItem("apple", 0.99)
-  expect(item).to.be.a("object")
-  expect(item).to.have.property("name", "apple")
-  expect(item).to.have.property("price", 0.99)
-  expect(item).to.have.property("quantity", 1)
+  const kleenex = utils.createItem("kleenex", 2.99)
+  expect(kleenex).to.be.a("object")
+  expect(kleenex).to.have.property("name", "kleenex")
+  expect(kleenex).to.have.property("price", 2.99)
+  expect(kleenex).to.have.property("quantity", 1)
 })
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function () {
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart).to.be.a("array")
+  expect(shoppingCart.length).to.equal(0)
+})
 
-it("Should add a new item to the shopping cart")
+it("Should add a new item to the shopping cart", function () {
+  const notebook = utils.createItem("notebook", 5.99)
+  utils.addItemToCart(notebook)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart.length).to.equal(1)
+  expect(shoppingCart[0]).to.have.property("name", "notebook")
+  expect(shoppingCart[0]).to.have.property("price", 5.99)
+  expect(shoppingCart[0]).to.have.property("quantity", 1)
+})
 
-it("Should return the number of items in the cart")
+it("Should return the number of items in the cart", function () {
+  const clementine = utils.createItem("clementine", 0.99)
+  utils.addItemToCart(clementine)
+  const numItems = utils.getNumItemsInCart()
+  expect(numItems).to.be.a("number")
+  expect(numItems).to.equal(1)
+})
 
-it("Should remove items from cart")
+it("Should remove items from cart", function () {
+  const fig = utils.createItem("fig", 3.99)
+  utils.addItemToCart(fig)
+  utils.removeItemFromCart(fig)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart.length).to.equal(0)
+})
 
 // ========================================================
 // Stretch Challenges
 // ========================================================
 
-it("Should update the count of items in the cart")
+it("Should update the count of items in the cart", function () {
+  const banana = utils.createItem("banana", 0.99)
+  utils.addItemToCart(banana)
+  utils.updateItemQuantity(banana, 5)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart.length).to.equal(1)
+  const itemIndex = shoppingCart.findIndex((cartItem) => {
+    return cartItem.name === banana.name
+  })
+  expect(shoppingCart[itemIndex]).to.have.property("quantity", 5)
+})
 
-it("Should validate that an empty cart has 0 items")
 
-it("Should return the total cost of all items in the cart")
+it("Should validate that an empty cart has 0 items", function () {
+  const numItems = utils.getNumItemsInCart()
+  expect(numItems).to.equal(0)
+})
+
+it("Should return the total cost of all items in the cart", function () {
+  const apple = utils.createItem("pineapple", 3.99)
+  const pen = utils.createItem("pen", 0.99)
+  utils.addItemToCart(apple)
+  utils.addItemToCart(pen)
+  const totalCost = utils.getTotalCost()
+  expect(totalCost).to.be.a("number")
+  expect(totalCost).to.equal(4.98)
+})
